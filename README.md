@@ -86,6 +86,20 @@ let output = try await session.generate(
 )
 ```
 
+## GenerationConfig explained
+
+`GenerationConfig` controls how much context the runtime keeps and how it samples output.
+
+- `contextLength`: maximum number of tokens the runtime can keep in memory for a request. Larger values allow longer prompts and longer conversations, but they also increase memory usage.
+- `maxTokens`: maximum number of tokens the model is allowed to generate for a single response. Use lower values for short structured output and higher values for free-form text.
+- `temperature`: controls randomness during sampling. Lower values such as `0.1` or `0.2` are better for deterministic JSON or classification tasks. Higher values produce more varied text but also more instability.
+
+Practical defaults:
+
+- Structured output or JSON: `contextLength: 1024`, `maxTokens: 120...200`, `temperature: 0.1...0.2`
+- Short assistant replies: `contextLength: 1024...2048`, `maxTokens: 150...300`, `temperature: 0.3...0.6`
+- More creative text: `temperature: 0.7+`
+
 ## Architecture
 
 ```mermaid
@@ -198,6 +212,20 @@ let output = try await session.generate(
     systemPrompt: "You are a structured output assistant. Return JSON only."
 )
 ```
+
+## Explicación de GenerationConfig
+
+`GenerationConfig` controla cuánto contexto conserva el runtime y cómo genera la salida.
+
+- `contextLength`: número máximo de tokens que el runtime puede mantener en memoria para una petición. Valores más altos permiten prompts más largos y conversaciones más extensas, pero también consumen más memoria.
+- `maxTokens`: número máximo de tokens que el modelo puede generar en una sola respuesta. Usa valores bajos para salidas estructuradas o JSON cortos, y valores mayores para texto más libre.
+- `temperature`: controla la aleatoriedad del muestreo. Valores bajos como `0.1` o `0.2` funcionan mejor para JSON determinista o tareas de clasificación. Valores altos producen texto más variado, pero también más inestable.
+
+Defaults prácticos:
+
+- Salida estructurada o JSON: `contextLength: 1024`, `maxTokens: 120...200`, `temperature: 0.1...0.2`
+- Respuestas cortas de asistente: `contextLength: 1024...2048`, `maxTokens: 150...300`, `temperature: 0.3...0.6`
+- Texto más creativo: `temperature: 0.7+`
 
 ## Arquitectura
 
