@@ -51,6 +51,21 @@ Ship the model separately from the package:
 
 The built-in `ModelLocator` searches those locations for the filename declared by `ModelDescriptor`.
 
+## Add your first GGUF model
+
+For a first integration, use the built-in Qwen recommendation:
+
+- `ModelCatalog.qwen15BInstructQ4`
+- expected filename: `qwen2.5-1.5b-instruct-q4_k_m.gguf`
+
+Typical flow:
+
+1. Download the `.gguf` file.
+2. Add it to your app bundle or place it in the app's documents directory.
+3. Create a session with `ModelCatalog.qwen15BInstructQ4`.
+
+If you ship the model in the app bundle, keep in mind that the app size will increase significantly.
+
 ## Quick start
 
 ```swift
@@ -133,6 +148,21 @@ Distribuye el modelo aparte del paquete:
 2. O guarda el archivo `.gguf` en el directorio Documents de la app.
 
 `ModelLocator` busca en esas ubicaciones usando el nombre de archivo declarado por `ModelDescriptor`.
+
+## Añade tu primer modelo GGUF
+
+Para una primera integración, usa la recomendación incluida de Qwen:
+
+- `ModelCatalog.qwen15BInstructQ4`
+- nombre de archivo esperado: `qwen2.5-1.5b-instruct-q4_k_m.gguf`
+
+Flujo típico:
+
+1. Descarga el archivo `.gguf`.
+2. Añádelo al bundle de tu app o colócalo en el directorio Documents de la app.
+3. Crea una sesión con `ModelCatalog.qwen15BInstructQ4`.
+
+Si distribuyes el modelo dentro del bundle, ten en cuenta que el tamaño final de la app crecerá bastante.
 
 ## Inicio rápido
 

@@ -1,22 +1,24 @@
 # Releasing CocoaLM
 
-## Current development setup
+## Current release setup
 
-The package currently depends on a local binary target:
+The package is currently distributed through:
 
-- `../Vendor/llama.cpp/build-apple/llama.xcframework`
+- a hosted GitHub Releases artifact
+- `binaryTarget(url:checksum:)` in `Package.swift`
 
-That is acceptable for local development, but not for a public Swift Package Manager release.
+That means the public package no longer depends on a local `Vendor/` directory.
 
-## Public release requirements
+## When cutting a new version
 
-Before tagging `1.0` or publishing the repository:
+Before publishing a new CocoaLM release:
 
 1. Build a release XCFramework from `llama.cpp`.
 2. Package and host the artifact outside the repository.
-3. Replace the local binary target path with a remote binary target and checksum.
-4. Validate `swift build` on a clean machine with no local `Vendor/` directory.
-5. Verify the README installation instructions against the hosted artifact.
+3. Compute the Swift Package Manager checksum.
+4. Update `Package.swift` with the new release URL and checksum.
+5. Validate `swift build` on a clean machine with no local `Vendor/` directory.
+6. Verify the README installation instructions against the hosted artifact.
 
 ## Suggested artifact strategy
 
@@ -25,24 +27,13 @@ Recommended options:
 - GitHub Releases artifact + `binaryTarget(url:checksum:)`
 - dedicated artifact hosting bucket
 
-## Example migration
-
-Replace:
+## Example configuration
 
 ```swift
 .binaryTarget(
     name: "llama",
-    path: "../Vendor/llama.cpp/build-apple/llama.xcframework"
-)
-```
-
-With:
-
-```swift
-.binaryTarget(
-    name: "llama",
-    url: "https://github.com/your-org/CocoaLM/releases/download/0.1.0/llama.xcframework.zip",
-    checksum: "<checksum>"
+    url: "https://github.com/JimmyDevCode/CocoaLM/releases/download/0.1.0/llama.xcframework.zip",
+    checksum: "01f3183fec1a6af553f8ffc76061d1a870629ddd66dded95c1746b816d7b0649"
 )
 ```
 
@@ -50,7 +41,9 @@ With:
 
 - Update `CHANGELOG.md`.
 - Build and host the XCFramework artifact.
+- Compute the new checksum.
 - Update `Package.swift`.
 - Run `swift package describe`.
 - Run `swift build`.
+- Run `swift test`.
 - Tag the release.
