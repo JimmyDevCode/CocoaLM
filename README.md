@@ -31,18 +31,16 @@ That separation is intentional: the package owns the runtime, while the host app
 Add the package to your project with Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/your-org/CocoaLM.git", from: "0.1.0")
+.package(url: "https://github.com/JimmyDevCode/CocoaLM.git", from: "0.1.0")
 ```
 
 Then add `CocoaLM` to your target dependencies.
 
 ## Status
 
-This repository is ready for extraction and publication, but one release concern remains:
+The package is now distributed through Swift Package Manager using a hosted binary artifact for the bundled `llama.xcframework`.
 
-- the package currently points to a local development `llama.xcframework`
-
-That means the package builds in this workspace, but a public release must replace the local path with a hosted binary artifact. See `Documentation/RELEASING.md`.
+The framework runtime is shipped through GitHub Releases, while GGUF model files remain the responsibility of the host application.
 
 ## Adding a GGUF model
 
@@ -90,11 +88,7 @@ let output = try await session.generate(
 
 ## Development note
 
-This workspace uses a local `llama.xcframework` binary target during development:
-
-- `../Vendor/llama.cpp/build-apple/llama.xcframework`
-
-For a public release, replace that local path with a hosted XCFramework artifact.
+For local development of the runtime itself, you can still build a fresh `llama.xcframework` from `llama.cpp` and publish a new release artifact when cutting a new version.
 
 ## Español
 
@@ -120,18 +114,16 @@ Esa separación es intencional: el paquete se encarga del runtime, mientras la a
 Agrega el paquete a tu proyecto con Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/your-org/CocoaLM.git", from: "0.1.0")
+.package(url: "https://github.com/JimmyDevCode/CocoaLM.git", from: "0.1.0")
 ```
 
 Luego agrega `CocoaLM` a las dependencias de tu target.
 
 ## Estado
 
-Este repositorio ya está listo para extraerse y publicarse, pero queda una consideración de release:
+El paquete ya se distribuye mediante Swift Package Manager usando un artefacto binario hospedado para el `llama.xcframework`.
 
-- el paquete todavía apunta a un `llama.xcframework` local de desarrollo
-
-Eso significa que el paquete compila en este workspace, pero una release pública debe reemplazar esa ruta local por un artefacto binario hospedado. Revisa `Documentation/RELEASING.md`.
+El runtime del framework se distribuye a través de GitHub Releases, mientras que los archivos GGUF siguen siendo responsabilidad de la app anfitriona.
 
 ## Cómo añadir un modelo GGUF
 
@@ -179,8 +171,4 @@ let output = try await session.generate(
 
 ## Nota de desarrollo
 
-Este workspace usa un `llama.xcframework` local durante desarrollo:
-
-- `../Vendor/llama.cpp/build-apple/llama.xcframework`
-
-Para una release pública, reemplaza esa ruta local por un XCFramework hospedado.
+Para desarrollo del runtime, todavía puedes compilar un `llama.xcframework` nuevo desde `llama.cpp` y publicar un nuevo artefacto de release al sacar una versión.
