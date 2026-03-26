@@ -20,7 +20,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "llama",
-            path: "../Vendor/llama.cpp/build-apple/llama.xcframework"
+            url: "https://github.com/JimmyDevCode/CocoaLM/releases/download/0.1.0/llama.xcframework.zip",
+            checksum: "01f3183fec1a6af553f8ffc76061d1a870629ddd66dded95c1746b816d7b0649"
         ),
         .target(
             name: "CocoaLMBridge",
