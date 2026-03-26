@@ -86,6 +86,21 @@ let output = try await session.generate(
 )
 ```
 
+## Architecture
+
+```mermaid
+flowchart TD
+    A[Host App<br/>SwiftUI / UIKit / AppKit] --> B[CocoaLM]
+    B --> C[Public Swift API<br/>CocoaLMSession / ModelLocator / ModelCatalog]
+    C --> D[Private Bridge<br/>Objective-C++]
+    D --> E[llama.cpp]
+    E --> F[llama.xcframework]
+    F --> G[GGUF Model]
+
+    H[App Bundle] --> G
+    I[Documents Directory] --> G
+```
+
 ## Recommended package design
 
 - Keep the package focused on runtime concerns.
@@ -182,6 +197,21 @@ let output = try await session.generate(
     userPrompt: "Return a JSON object describing the user's mood.",
     systemPrompt: "You are a structured output assistant. Return JSON only."
 )
+```
+
+## Arquitectura
+
+```mermaid
+flowchart TD
+    A[Host App<br/>SwiftUI / UIKit / AppKit] --> B[CocoaLM]
+    B --> C[Public Swift API<br/>CocoaLMSession / ModelLocator / ModelCatalog]
+    C --> D[Private Bridge<br/>Objective-C++]
+    D --> E[llama.cpp]
+    E --> F[llama.xcframework]
+    F --> G[GGUF Model]
+
+    H[App Bundle] --> G
+    I[Documents Directory] --> G
 ```
 
 ## Recomendaciones de diseño
