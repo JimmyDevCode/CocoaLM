@@ -1,0 +1,19 @@
+.DS_Store
+.build/
+.swiftpm/
+.spm-home/
+Package.resolved
+DerivedData/
+
+# Local development binaries and generated artifacts
+Vendor/
+Artifacts/
+Releases/
+
+# Large local model files should not live in the package repo
+*.gguf
+
+# Xcode user data
+*.xcworkspace
+xcuserdata/
+*.xcuserstate
