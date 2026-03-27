@@ -239,6 +239,13 @@ flowchart TD
     I[Documents Directory] --> G
 ```
 
+## Documentation guide
+
+- [Documentation/API_EXAMPLES.md](Documentation/API_EXAMPLES.md): full examples for the public API.
+- [Documentation/ARCHITECTURE.md](Documentation/ARCHITECTURE.md): internal design decisions, package boundaries, and runtime notes.
+- [Documentation/RELEASING.md](Documentation/RELEASING.md): release workflow for maintainers.
+- [CONTRIBUTING.md](CONTRIBUTING.md): contribution guidelines and documentation boundaries.
+
 ## Repository layout
 
 - `Sources/CocoaLM/`: public Swift API.
@@ -485,6 +492,13 @@ flowchart TD
     H[App Bundle] --> G
     I[Documents Directory] --> G
 ```
+
+## Guía de documentación
+
+- [Documentation/API_EXAMPLES.md](Documentation/API_EXAMPLES.md): ejemplos completos de la API pública.
+- [Documentation/ARCHITECTURE.md](Documentation/ARCHITECTURE.md): decisiones internas de diseño, límites del package y notas del runtime.
+- [Documentation/RELEASING.md](Documentation/RELEASING.md): flujo de publicación para maintainers.
+- [CONTRIBUTING.md](CONTRIBUTING.md): guía para contribuir y límites de la documentación.
 
 ## Estructura del repositorio
 
