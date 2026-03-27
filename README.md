@@ -73,6 +73,15 @@ Add the package to your project with Swift Package Manager:
 
 Then add `CocoaLM` to your target dependencies.
 
+## Platform support
+
+CocoaLM currently supports the following minimum platform versions:
+
+- iOS 17+
+- macOS 14+
+- tvOS 17+
+- visionOS 1+
+
 ## Public API
 
 - `CocoaLMRuntime`: runtime availability checks.
@@ -326,6 +335,15 @@ Agrega el paquete a tu proyecto con Swift Package Manager:
 ```
 
 Luego agrega `CocoaLM` a las dependencias de tu target.
+
+## Compatibilidad de plataformas
+
+CocoaLM soporta actualmente estas versiones mínimas de plataforma:
+
+- iOS 17+
+- macOS 14+
+- tvOS 17+
+- visionOS 1+
 
 ## API pública
 
