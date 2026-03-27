@@ -216,19 +216,13 @@ if CocoaLMRuntime.isAvailable {
 }
 ```
 
-## GenerationConfig explained
+## GenerationConfig
 
-`GenerationConfig` controls how much context the runtime keeps and how it samples output.
+`GenerationConfig` controls context size, output length, and sampling behavior.
 
-- `contextLength`: maximum number of tokens the runtime can keep in memory for a request. Larger values allow longer prompts and longer conversations, but they also increase memory usage.
-- `maxTokens`: maximum number of tokens the model is allowed to generate for a single response. Use lower values for short structured output and higher values for free-form text.
-- `temperature`: controls randomness during sampling. Lower values such as `0.1` or `0.2` are better for deterministic JSON or classification tasks. Higher values produce more varied text but also more instability.
+Use lower temperatures for structured output and classification. Use higher temperatures only when you want more varied text.
 
-Practical defaults:
-
-- Structured output or JSON: `contextLength: 1024`, `maxTokens: 120...200`, `temperature: 0.1...0.2`
-- Short assistant replies: `contextLength: 1024...2048`, `maxTokens: 150...300`, `temperature: 0.3...0.6`
-- More creative text: `temperature: 0.7+`
+For practical guidance and fuller examples, see [Documentation/API_EXAMPLES.md](Documentation/API_EXAMPLES.md).
 
 ## Architecture
 
@@ -244,14 +238,6 @@ flowchart TD
     H[App Bundle] --> G
     I[Documents Directory] --> G
 ```
-
-## Recommended package design
-
-- Keep the package focused on runtime concerns.
-- Keep logs and documentation in English.
-- Keep the public API small and product-agnostic.
-- Keep model distribution outside SPM.
-- Keep app-specific prompts, parsers, and safety policies in the host app.
 
 ## Repository layout
 
@@ -477,19 +463,13 @@ if CocoaLMRuntime.isAvailable {
 }
 ```
 
-## Explicación de GenerationConfig
+## GenerationConfig
 
-`GenerationConfig` controla cuánto contexto conserva el runtime y cómo genera la salida.
+`GenerationConfig` controla el tamaño de contexto, la longitud máxima de salida y el comportamiento del muestreo.
 
-- `contextLength`: número máximo de tokens que el runtime puede mantener en memoria para una petición. Valores más altos permiten prompts más largos y conversaciones más extensas, pero también consumen más memoria.
-- `maxTokens`: número máximo de tokens que el modelo puede generar en una sola respuesta. Usa valores bajos para salidas estructuradas o JSON cortos, y valores mayores para texto más libre.
-- `temperature`: controla la aleatoriedad del muestreo. Valores bajos como `0.1` o `0.2` funcionan mejor para JSON determinista o tareas de clasificación. Valores altos producen texto más variado, pero también más inestable.
+Usa temperaturas bajas para salida estructurada y clasificación. Usa temperaturas más altas solo cuando quieras texto más variado.
 
-Defaults prácticos:
-
-- Salida estructurada o JSON: `contextLength: 1024`, `maxTokens: 120...200`, `temperature: 0.1...0.2`
-- Respuestas cortas de asistente: `contextLength: 1024...2048`, `maxTokens: 150...300`, `temperature: 0.3...0.6`
-- Texto más creativo: `temperature: 0.7+`
+Para una guía más práctica y ejemplos completos, revisa [Documentation/API_EXAMPLES.md](Documentation/API_EXAMPLES.md).
 
 ## Arquitectura
 
@@ -505,14 +485,6 @@ flowchart TD
     H[App Bundle] --> G
     I[Documents Directory] --> G
 ```
-
-## Recomendaciones de diseño
-
-- Mantén el paquete enfocado en el runtime.
-- Mantén logs y documentación en inglés.
-- Mantén la API pública pequeña y agnóstica al producto.
-- Mantén la distribución de modelos fuera de SPM.
-- Mantén prompts, parsers y políticas de seguridad específicas de producto dentro de la app anfitriona.
 
 ## Estructura del repositorio
 

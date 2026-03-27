@@ -72,3 +72,36 @@ For future releases, the maintainer still rebuilds `llama.xcframework` from `lla
 - Product-specific JSON parsers
 
 Those belong in the host application.
+
+## Package boundaries
+
+CocoaLM deliberately keeps a narrow scope.
+
+The package should own:
+
+- the runtime bridge
+- model loading
+- local text generation
+- runtime-level error translation
+
+The host app should own:
+
+- prompt design
+- output validation
+- product-specific routing
+- safety policy
+- model download flows
+
+## GenerationConfig guidance
+
+`GenerationConfig` is intentionally small because most apps only need three runtime knobs:
+
+- `contextLength` controls how much prompt and generation state the runtime can keep in memory
+- `maxTokens` controls the maximum response length for one generation
+- `temperature` controls output randomness during sampling
+
+Practical defaults:
+
+- Structured output or JSON: `contextLength: 1024`, `maxTokens: 120...200`, `temperature: 0.1...0.2`
+- Short assistant replies: `contextLength: 1024...2048`, `maxTokens: 150...300`, `temperature: 0.3...0.6`
+- More creative text: `temperature: 0.7+`

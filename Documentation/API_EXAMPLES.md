@@ -91,3 +91,21 @@ let url = ModelLocator.locate(
     strategy: .documentsThenBundle
 )
 ```
+
+## GenerationConfig notes
+
+Use `GenerationConfig` based on the kind of output you want:
+
+- Structured JSON or classification: low temperature such as `0.1` or `0.2`
+- Short assistant replies: medium temperature such as `0.3...0.6`
+- More varied text: higher temperature values
+
+Example:
+
+```swift
+let config = GenerationConfig(
+    contextLength: 1024,
+    maxTokens: 160,
+    temperature: 0.2
+)
+```

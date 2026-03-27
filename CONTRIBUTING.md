@@ -44,3 +44,10 @@ Changes that affect packaging should also update:
 - `Documentation/ARCHITECTURE.md`
 - `Documentation/RELEASING.md`
 - `CHANGELOG.md`
+
+## Documentation boundaries
+
+- Keep `README.md` focused on positioning, installation, quick start, and first-use guidance.
+- Keep `Documentation/API_EXAMPLES.md` focused on fuller code examples.
+- Keep `Documentation/ARCHITECTURE.md` focused on internal design decisions and package boundaries.
+- Keep `Documentation/RELEASING.md` focused on release operations only.
