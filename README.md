@@ -90,14 +90,16 @@ The package is now distributed through Swift Package Manager using a hosted bina
 
 The framework runtime is shipped through GitHub Releases, while GGUF model files remain the responsibility of the host application.
 
-## Adding a GGUF model
+## Model files
 
-Ship the model separately from the package:
+CocoaLM expects the model file to live outside the package itself.
 
-1. Add a `.gguf` file to your app bundle.
-2. Or store the `.gguf` file in the app's documents directory.
+Supported locations:
 
-The built-in `ModelLocator` searches those locations for the filename declared by `ModelDescriptor`.
+1. Your app bundle.
+2. Your app's documents directory.
+
+The built-in `ModelLocator` searches those locations using the filename declared by `ModelDescriptor`.
 
 ## Add your first GGUF model
 
@@ -162,6 +164,8 @@ let session = try CocoaLMSession(
 ```
 
 ## Quick start
+
+This assumes the GGUF model file is already present in your app bundle or documents directory.
 
 ```swift
 import CocoaLM
@@ -347,12 +351,14 @@ El paquete ya se distribuye mediante Swift Package Manager usando un artefacto b
 
 El runtime del framework se distribuye a través de GitHub Releases, mientras que los archivos GGUF siguen siendo responsabilidad de la app anfitriona.
 
-## Cómo añadir un modelo GGUF
+## Archivos de modelo
 
-Distribuye el modelo aparte del paquete:
+CocoaLM espera que el archivo del modelo viva fuera del paquete.
 
-1. Añade un archivo `.gguf` al bundle de tu app.
-2. O guarda el archivo `.gguf` en el directorio Documents de la app.
+Ubicaciones soportadas:
+
+1. El bundle de tu app.
+2. El directorio Documents de tu app.
 
 `ModelLocator` busca en esas ubicaciones usando el nombre de archivo declarado por `ModelDescriptor`.
 
@@ -419,6 +425,8 @@ let session = try CocoaLMSession(
 ```
 
 ## Inicio rápido
+
+Esto asume que el archivo GGUF ya está presente en el bundle de tu app o en el directorio Documents.
 
 ```swift
 import CocoaLM
@@ -520,5 +528,3 @@ Para un ejemplo completo que cubre toda la API pública, incluido `CocoaLMError`
 ## Nota de desarrollo
 
 Para iterar sobre el runtime, puedes compilar un `llama.xcframework` nuevo a partir de `llama.cpp`, subirlo como artefacto de release y actualizar el `checksum` y la URL en `Package.swift` al publicar una nueva versión.
-
-Para desarrollo del runtime, todavía puedes compilar un `llama.xcframework` nuevo desde `llama.cpp` y publicar un nuevo artefacto de release al sacar una versión.
