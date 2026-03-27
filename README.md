@@ -9,7 +9,17 @@ Local LLM runtime for Swift apps on Apple platforms.
 
 ## English
 
-CocoaLM is a Swift-first package that lets you run GGUF language models inside iOS, macOS, tvOS, and visionOS apps using a simple async API, with `llama.cpp` under the hood.
+CocoaLM is a Swift-first local LLM runtime for Apple platforms. It gives you a clean async API for running GGUF models inside iOS, macOS, tvOS, and visionOS apps without forcing your product code to deal with `llama.cpp` internals.
+
+It is designed for teams that want on-device generation in real apps: structured output, lightweight assistants, local classifiers, offline-first flows, and product-specific prompting handled in app code.
+
+## Why CocoaLM
+
+- Swift-first integration instead of a raw C or C++ surface.
+- Apple-platform focused packaging for app teams, not just CLI experiments.
+- Small public API that stays product-agnostic.
+- Clear separation between runtime concerns and application logic.
+- Works well for structured output, local routing, and controlled inference flows.
 
 ## What CocoaLM ships
 
@@ -195,7 +205,17 @@ For local development of the runtime itself, you can still build a fresh `llama.
 
 ## Español
 
-CocoaLM es un paquete orientado a Swift que permite ejecutar modelos GGUF dentro de apps para iOS, macOS, tvOS y visionOS con una API `async` simple, usando `llama.cpp` por debajo.
+CocoaLM es un runtime local de LLM orientado a Swift para plataformas Apple. Te da una API `async` limpia para ejecutar modelos GGUF dentro de apps para iOS, macOS, tvOS y visionOS sin obligarte a exponer `llama.cpp` en tu código de producto.
+
+Está pensado para equipos que quieren inferencia on-device en apps reales: salida estructurada, asistentes ligeros, clasificadores locales, flujos offline-first y prompts específicos de producto resueltos desde la app anfitriona.
+
+## Por qué CocoaLM
+
+- Integración pensada para Swift en lugar de una superficie cruda de C o C++.
+- Empaquetado enfocado en apps Apple, no solo en experimentos de consola.
+- API pública pequeña y agnóstica al producto.
+- Separación clara entre runtime y lógica de aplicación.
+- Encaja bien en flujos de salida estructurada, routing local e inferencia controlada.
 
 ## Qué incluye CocoaLM
 
