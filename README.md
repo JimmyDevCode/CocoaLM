@@ -36,9 +36,17 @@ It is designed for teams that want on-device generation in real apps: structured
 
 That separation is intentional: the package owns the runtime, while the host app owns model choice, prompt design, and product behavior.
 
+## What is llama.cpp
+
+`llama.cpp` is an open-source local inference engine for running language models on device.
+
+It became popular because it made it practical to run quantized models outside the cloud, including in desktop and mobile environments. Today it is commonly used as the execution layer behind many local LLM apps and tools.
+
+In CocoaLM, `llama.cpp` is the part that loads the GGUF model file and performs text generation. CocoaLM does not expose that low-level runtime directly. Instead, it wraps it behind a Swift-first API designed for Apple apps.
+
 ## What is GGUF
 
-GGUF is a model file format commonly used by `llama.cpp` and related local inference runtimes. In practice, it is the file you ship or download so the runtime can load a language model on device.
+GGUF is the model file format commonly used by `llama.cpp` and similar local runtimes. In practice, it is the file your app ships or downloads so the runtime can load a language model on device.
 
 In CocoaLM, the package provides the runtime layer, while the host app provides the `.gguf` model file.
 
@@ -285,9 +293,17 @@ Está pensado para equipos que quieren inferencia on-device en apps reales: sali
 
 Esa separación es intencional: el paquete se encarga del runtime, mientras la app anfitriona se encarga de elegir el modelo, diseñar prompts y definir el comportamiento de producto.
 
+## Qué es llama.cpp
+
+`llama.cpp` es un motor open source de inferencia local para ejecutar modelos de lenguaje directamente en el dispositivo.
+
+Se volvió popular porque hizo práctico correr modelos cuantizados fuera de la nube, incluyendo entornos de escritorio y móviles. Hoy suele usarse como capa de ejecución detrás de muchas apps y herramientas de LLM local.
+
+En CocoaLM, `llama.cpp` es la parte que carga el archivo GGUF y realiza la generación de texto. CocoaLM no expone ese runtime de bajo nivel directamente. En su lugar, lo encapsula detrás de una API pensada para Swift y plataformas Apple.
+
 ## Qué es GGUF
 
-GGUF es un formato de archivo de modelos usado comúnmente por `llama.cpp` y otros runtimes de inferencia local. En la práctica, es el archivo que tu app distribuye o descarga para que el runtime pueda cargar el modelo en el dispositivo.
+GGUF es el formato de archivo de modelos que suelen usar `llama.cpp` y runtimes parecidos de inferencia local. En la práctica, es el archivo que tu app distribuye o descarga para que el runtime pueda cargar el modelo en el dispositivo.
 
 En CocoaLM, el paquete aporta la capa de runtime, mientras la app anfitriona aporta el archivo de modelo `.gguf`.
 
