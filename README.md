@@ -45,6 +45,7 @@ Then add `CocoaLM` to your target dependencies.
 - `ModelLocator`: resolves local model file URLs.
 - `GenerationConfig`: token and sampling configuration.
 - `CocoaLMSession`: high-level async generation entry point.
+- `CocoaLMError`: typed runtime and generation errors.
 
 ## Status
 
@@ -182,7 +183,11 @@ flowchart TD
 - `Sources/CocoaLM/`: public Swift API.
 - `Sources/CocoaLMBridge/`: internal Objective-C++ bridge.
 - `Tests/`: package-level unit tests.
-- `Documentation/`: design notes and architecture docs.
+- `Documentation/`: design notes, release notes, and API examples.
+
+## More examples
+
+For a complete example that covers the full public API surface, including `CocoaLMError`, see [Documentation/API_EXAMPLES.md](Documentation/API_EXAMPLES.md).
 
 ## Development note
 
@@ -226,6 +231,7 @@ Luego agrega `CocoaLM` a las dependencias de tu target.
 - `ModelLocator`: resolución de URLs locales del modelo.
 - `GenerationConfig`: configuración de tokens y muestreo.
 - `CocoaLMSession`: punto de entrada `async` para generar texto.
+- `CocoaLMError`: errores tipados del runtime y la generación.
 
 ## Estado
 
@@ -363,7 +369,11 @@ flowchart TD
 - `Sources/CocoaLM/`: API pública en Swift.
 - `Sources/CocoaLMBridge/`: bridge interno en Objective-C++.
 - `Tests/`: tests del paquete.
-- `Documentation/`: notas de arquitectura y publicación.
+- `Documentation/`: notas de arquitectura, publicación y ejemplos de API.
+
+## Más ejemplos
+
+Para un ejemplo completo que cubre toda la API pública, incluido `CocoaLMError`, revisa [Documentation/API_EXAMPLES.md](Documentation/API_EXAMPLES.md).
 
 ## Nota de desarrollo
 
