@@ -36,6 +36,25 @@ It is designed for teams that want on-device generation in real apps: structured
 
 That separation is intentional: the package owns the runtime, while the host app owns model choice, prompt design, and product behavior.
 
+## What is GGUF
+
+GGUF is a model file format commonly used by `llama.cpp` and related local inference runtimes. In practice, it is the file you ship or download so the runtime can load a language model on device.
+
+In CocoaLM, the package provides the runtime layer, while the host app provides the `.gguf` model file.
+
+## Model compatibility
+
+CocoaLM is not limited to the built-in Qwen recommendation. You can use any GGUF model that is compatible with the packaged `llama.cpp` runtime and fits the memory and performance constraints of your target device.
+
+In practice, model compatibility depends on:
+
+- whether the model is exported as a valid GGUF file
+- whether the bundled runtime supports that architecture and quantization
+- whether the model size is realistic for the target device
+- whether the model quality is good enough for your product task
+
+`ModelCatalog` is intentionally small. It provides a few known-good recommendations, but you can always create your own `ModelDescriptor` for a different GGUF model.
+
 ## Installation
 
 Add the package to your project with Swift Package Manager:
@@ -79,13 +98,36 @@ For a first integration, use the built-in Qwen recommendation:
 - `ModelCatalog.qwen15BInstructQ4`
 - expected filename: `qwen2.5-1.5b-instruct-q4_k_m.gguf`
 
+### Where to get a GGUF model
+
+Recommended source:
+
+- Qwen2.5 1.5B Instruct GGUF: <https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF>
+
+Download the file that matches the descriptor filename:
+
+- `qwen2.5-1.5b-instruct-q4_k_m.gguf`
+
+### How to add the model to your app bundle
+
+In Xcode:
+
+1. Drag the `.gguf` file into your project navigator.
+2. Enable `Copy items if needed` if the file lives outside your app project.
+3. Make sure your app target is checked.
+4. Build the app so the model is copied into the final bundle.
+
+If you prefer, you can also download the model at runtime and store it in the app's documents directory.
+
+If you ship the model in the app bundle, keep in mind that the final app size will increase significantly.
+
+### How to load the model with CocoaLM
+
 Typical flow:
 
 1. Download the `.gguf` file.
 2. Add it to your app bundle or place it in the app's documents directory.
 3. Create a session with `ModelCatalog.qwen15BInstructQ4`.
-
-If you ship the model in the app bundle, keep in mind that the app size will increase significantly.
 
 Example bundle lookup:
 
@@ -98,6 +140,17 @@ if let url = ModelLocator.locate(
 ) {
     print("Model found at:", url.path)
 }
+```
+
+Example session creation after adding the model to your app:
+
+```swift
+import CocoaLM
+
+let session = try CocoaLMSession(
+    model: ModelCatalog.qwen15BInstructQ4,
+    strategy: .bundleThenDocuments
+)
 ```
 
 ## Quick start
@@ -232,6 +285,25 @@ Está pensado para equipos que quieren inferencia on-device en apps reales: sali
 
 Esa separación es intencional: el paquete se encarga del runtime, mientras la app anfitriona se encarga de elegir el modelo, diseñar prompts y definir el comportamiento de producto.
 
+## Qué es GGUF
+
+GGUF es un formato de archivo de modelos usado comúnmente por `llama.cpp` y otros runtimes de inferencia local. En la práctica, es el archivo que tu app distribuye o descarga para que el runtime pueda cargar el modelo en el dispositivo.
+
+En CocoaLM, el paquete aporta la capa de runtime, mientras la app anfitriona aporta el archivo de modelo `.gguf`.
+
+## Compatibilidad de modelos
+
+CocoaLM no está limitado a la recomendación incluida de Qwen. Puedes usar cualquier modelo GGUF que sea compatible con el runtime empaquetado de `llama.cpp` y que entre dentro de las restricciones reales de memoria y rendimiento del dispositivo objetivo.
+
+En la práctica, la compatibilidad depende de:
+
+- que el modelo esté exportado como un archivo GGUF válido
+- que el runtime incluido soporte esa arquitectura y cuantización
+- que el tamaño del modelo sea realista para el dispositivo objetivo
+- que la calidad del modelo sea suficiente para la tarea de tu producto
+
+`ModelCatalog` es intencionalmente pequeño. Da unas cuantas recomendaciones conocidas, pero siempre puedes crear tu propio `ModelDescriptor` para otro modelo GGUF.
+
 ## Instalación
 
 Agrega el paquete a tu proyecto con Swift Package Manager:
@@ -275,13 +347,36 @@ Para una primera integración, usa la recomendación incluida de Qwen:
 - `ModelCatalog.qwen15BInstructQ4`
 - nombre de archivo esperado: `qwen2.5-1.5b-instruct-q4_k_m.gguf`
 
+### Dónde conseguir un modelo GGUF
+
+Fuente recomendada:
+
+- Qwen2.5 1.5B Instruct GGUF: <https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF>
+
+Descarga el archivo que coincide con el nombre esperado por el descriptor:
+
+- `qwen2.5-1.5b-instruct-q4_k_m.gguf`
+
+### Cómo añadir el modelo al bundle de tu app
+
+En Xcode:
+
+1. Arrastra el archivo `.gguf` al navegador del proyecto.
+2. Activa `Copy items if needed` si el archivo vive fuera del proyecto.
+3. Asegúrate de marcar el target de tu app.
+4. Compila la app para que el modelo sea copiado al bundle final.
+
+Si prefieres, también puedes descargar el modelo en runtime y guardarlo en el directorio Documents de la app.
+
+Si distribuyes el modelo dentro del bundle, ten en cuenta que el tamaño final de la app crecerá bastante.
+
+### Cómo cargar el modelo con CocoaLM
+
 Flujo típico:
 
 1. Descarga el archivo `.gguf`.
 2. Añádelo al bundle de tu app o colócalo en el directorio Documents de la app.
 3. Crea una sesión con `ModelCatalog.qwen15BInstructQ4`.
-
-Si distribuyes el modelo dentro del bundle, ten en cuenta que el tamaño final de la app crecerá bastante.
 
 Ejemplo de búsqueda en el bundle:
 
@@ -294,6 +389,17 @@ if let url = ModelLocator.locate(
 ) {
     print("Modelo encontrado en:", url.path)
 }
+```
+
+Ejemplo de creación de sesión después de añadir el modelo a la app:
+
+```swift
+import CocoaLM
+
+let session = try CocoaLMSession(
+    model: ModelCatalog.qwen15BInstructQ4,
+    strategy: .bundleThenDocuments
+)
 ```
 
 ## Inicio rápido
