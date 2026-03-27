@@ -18,6 +18,15 @@ public enum ModelLocator {
     ///   - bundle: Bundle used for bundled resources. Defaults to `.main`.
     ///   - fileManager: File manager used for filesystem lookups.
     /// - Returns: A local file URL if the model exists, otherwise `nil`.
+    ///
+    /// Example:
+    ///
+    /// ```swift
+    /// let url = ModelLocator.locate(
+    ///     ModelCatalog.qwen15BInstructQ4,
+    ///     strategy: .bundleThenDocuments
+    /// )
+    /// ```
     public static func locate(
         _ descriptor: ModelDescriptor,
         strategy: ModelLocationStrategy = .bundleThenDocuments,

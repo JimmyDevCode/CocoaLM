@@ -55,14 +55,14 @@ Framework logs, source documentation, README content, and architectural notes ar
 
 ## Current packaging strategy
 
-During development, CocoaLM references a local XCFramework:
+CocoaLM is currently distributed through:
 
-- `../Vendor/llama.cpp/build-apple/llama.xcframework`
+- a hosted GitHub Releases XCFramework artifact
+- `binaryTarget(url:checksum:)` in `Package.swift`
 
-That is convenient for iteration but not ideal for distribution. A public release should move to:
+That keeps the public package installable through Swift Package Manager without requiring a local `Vendor/` directory.
 
-- hosted XCFramework artifacts
-- or a build pipeline that publishes release binaries
+For future releases, the maintainer still rebuilds `llama.xcframework` from `llama.cpp`, uploads a new release artifact, and updates the binary target URL and checksum.
 
 ## Non-goals
 

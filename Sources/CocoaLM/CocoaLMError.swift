@@ -11,6 +11,7 @@ public enum CocoaLMError: LocalizedError, Sendable {
     /// The runtime returned a failure with an attached message.
     case generationFailed(message: String)
 
+    /// A localized, developer-facing description of the runtime error.
     public var errorDescription: String? {
         switch self {
         case .modelNotFound(let filename):

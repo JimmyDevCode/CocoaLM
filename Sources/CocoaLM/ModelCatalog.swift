@@ -23,6 +23,9 @@ public enum ModelCatalog {
     )
 
     /// All built-in recommendations exposed by the framework.
+    ///
+    /// This list is intentionally small and opinionated. Host apps remain free
+    /// to define custom ``ModelDescriptor`` values outside the catalog.
     public static let all: [ModelDescriptor] = [
         qwen15BInstructQ4,
         smolLM17BInstructQ4

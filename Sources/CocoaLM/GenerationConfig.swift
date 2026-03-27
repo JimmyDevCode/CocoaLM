@@ -9,6 +9,16 @@ public struct GenerationConfig: Hashable, Sendable {
     /// Sampling temperature. Use values near zero for deterministic output.
     public let temperature: Double
 
+    /// Creates a generation configuration for a single request or session.
+    ///
+    /// - Parameters:
+    ///   - contextLength: Maximum number of prompt and generation tokens the
+    ///     runtime keeps in memory for the request.
+    ///   - maxTokens: Maximum number of tokens the model may generate for one
+    ///     response.
+    ///   - temperature: Sampling temperature. Lower values are better for
+    ///     structured output and classification. Higher values produce more
+    ///     varied text.
     public init(
         contextLength: Int = 1024,
         maxTokens: Int = 160,

@@ -43,6 +43,20 @@ public final class CocoaLMSession {
     ///   - modelURL: Local filesystem URL of the GGUF file.
     ///   - generationConfig: Runtime generation options.
     /// - Throws: `CocoaLMError.runtimeUnavailable` if the runtime is missing.
+    ///
+    /// Example:
+    ///
+    /// ```swift
+    /// let modelURL = Bundle.main.url(
+    ///     forResource: "qwen2.5-1.5b-instruct-q4_k_m",
+    ///     withExtension: "gguf"
+    /// )!
+    ///
+    /// let session = try CocoaLMSession(
+    ///     model: ModelCatalog.qwen15BInstructQ4,
+    ///     modelURL: modelURL
+    /// )
+    /// ```
     public init(
         model: ModelDescriptor,
         modelURL: URL,
@@ -70,6 +84,15 @@ public final class CocoaLMSession {
     ///   - fileManager: File manager used for filesystem lookups.
     ///   - generationConfig: Runtime generation options.
     /// - Throws: `CocoaLMError.modelNotFound` if the file cannot be resolved.
+    ///
+    /// Example:
+    ///
+    /// ```swift
+    /// let session = try CocoaLMSession(
+    ///     model: ModelCatalog.qwen15BInstructQ4,
+    ///     strategy: .bundleThenDocuments
+    /// )
+    /// ```
     public convenience init(
         model: ModelDescriptor,
         strategy: ModelLocationStrategy = .bundleThenDocuments,
@@ -100,6 +123,15 @@ public final class CocoaLMSession {
     ///   - systemPrompt: System instructions used to shape the generation.
     /// - Returns: The generated text returned by the model.
     /// - Throws: `CocoaLMError` if generation fails or returns no content.
+    ///
+    /// Example:
+    ///
+    /// ```swift
+    /// let output = try await session.generate(
+    ///     userPrompt: "Summarize this text as JSON.",
+    ///     systemPrompt: "Return valid JSON only."
+    /// )
+    /// ```
     public func generate(
         userPrompt: String,
         systemPrompt: String = ""

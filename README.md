@@ -31,10 +31,20 @@ That separation is intentional: the package owns the runtime, while the host app
 Add the package to your project with Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/JimmyDevCode/CocoaLM.git", from: "0.1.0")
+.package(url: "https://github.com/JimmyDevCode/CocoaLM.git", from: "0.1.1")
 ```
 
 Then add `CocoaLM` to your target dependencies.
+
+## Public API
+
+- `CocoaLMRuntime`: runtime availability checks.
+- `ModelDescriptor`: metadata for a GGUF model file.
+- `ModelCatalog`: built-in model recommendations.
+- `ModelLocationStrategy`: search order for bundle and documents directory.
+- `ModelLocator`: resolves local model file URLs.
+- `GenerationConfig`: token and sampling configuration.
+- `CocoaLMSession`: high-level async generation entry point.
 
 ## Status
 
@@ -66,6 +76,19 @@ Typical flow:
 
 If you ship the model in the app bundle, keep in mind that the app size will increase significantly.
 
+Example bundle lookup:
+
+```swift
+import CocoaLM
+
+if let url = ModelLocator.locate(
+    ModelCatalog.qwen15BInstructQ4,
+    strategy: .bundleThenDocuments
+) {
+    print("Model found at:", url.path)
+}
+```
+
 ## Quick start
 
 ```swift
@@ -84,6 +107,37 @@ let output = try await session.generate(
     userPrompt: "Return a JSON object describing the user's mood.",
     systemPrompt: "You are a structured output assistant. Return JSON only."
 )
+```
+
+## API examples
+
+Create a session from an explicit file URL:
+
+```swift
+import CocoaLM
+
+let modelURL = Bundle.main.url(
+    forResource: "qwen2.5-1.5b-instruct-q4_k_m",
+    withExtension: "gguf"
+)!
+
+let session = try CocoaLMSession(
+    model: ModelCatalog.qwen15BInstructQ4,
+    modelURL: modelURL,
+    generationConfig: GenerationConfig(
+        contextLength: 1024,
+        maxTokens: 160,
+        temperature: 0.2
+    )
+)
+```
+
+Check runtime availability before enabling local generation:
+
+```swift
+if CocoaLMRuntime.isAvailable {
+    // Enable local inference features.
+}
 ```
 
 ## GenerationConfig explained
@@ -158,10 +212,20 @@ Esa separación es intencional: el paquete se encarga del runtime, mientras la a
 Agrega el paquete a tu proyecto con Swift Package Manager:
 
 ```swift
-.package(url: "https://github.com/JimmyDevCode/CocoaLM.git", from: "0.1.0")
+.package(url: "https://github.com/JimmyDevCode/CocoaLM.git", from: "0.1.1")
 ```
 
 Luego agrega `CocoaLM` a las dependencias de tu target.
+
+## API pública
+
+- `CocoaLMRuntime`: verificación de disponibilidad del runtime.
+- `ModelDescriptor`: metadatos de un archivo GGUF.
+- `ModelCatalog`: recomendaciones de modelos incluidas.
+- `ModelLocationStrategy`: orden de búsqueda entre bundle y Documents.
+- `ModelLocator`: resolución de URLs locales del modelo.
+- `GenerationConfig`: configuración de tokens y muestreo.
+- `CocoaLMSession`: punto de entrada `async` para generar texto.
 
 ## Estado
 
@@ -193,6 +257,19 @@ Flujo típico:
 
 Si distribuyes el modelo dentro del bundle, ten en cuenta que el tamaño final de la app crecerá bastante.
 
+Ejemplo de búsqueda en el bundle:
+
+```swift
+import CocoaLM
+
+if let url = ModelLocator.locate(
+    ModelCatalog.qwen15BInstructQ4,
+    strategy: .bundleThenDocuments
+) {
+    print("Modelo encontrado en:", url.path)
+}
+```
+
 ## Inicio rápido
 
 ```swift
@@ -211,6 +288,37 @@ let output = try await session.generate(
     userPrompt: "Return a JSON object describing the user's mood.",
     systemPrompt: "You are a structured output assistant. Return JSON only."
 )
+```
+
+## Ejemplos de API
+
+Crear una sesión desde una URL explícita:
+
+```swift
+import CocoaLM
+
+let modelURL = Bundle.main.url(
+    forResource: "qwen2.5-1.5b-instruct-q4_k_m",
+    withExtension: "gguf"
+)!
+
+let session = try CocoaLMSession(
+    model: ModelCatalog.qwen15BInstructQ4,
+    modelURL: modelURL,
+    generationConfig: GenerationConfig(
+        contextLength: 1024,
+        maxTokens: 160,
+        temperature: 0.2
+    )
+)
+```
+
+Verificar el runtime antes de habilitar inferencia local:
+
+```swift
+if CocoaLMRuntime.isAvailable {
+    // Activa funciones de inferencia local.
+}
 ```
 
 ## Explicación de GenerationConfig
@@ -258,5 +366,7 @@ flowchart TD
 - `Documentation/`: notas de arquitectura y publicación.
 
 ## Nota de desarrollo
+
+Para iterar sobre el runtime, puedes compilar un `llama.xcframework` nuevo a partir de `llama.cpp`, subirlo como artefacto de release y actualizar el `checksum` y la URL en `Package.swift` al publicar una nueva versión.
 
 Para desarrollo del runtime, todavía puedes compilar un `llama.xcframework` nuevo desde `llama.cpp` y publicar un nuevo artefacto de release al sacar una versión.
